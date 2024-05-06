@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="{{ url_for('static', filename='logo.svg') }}" type="image/svg+xml">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foto Squeeze - Home</title>
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
+
+        header {
+            background-color: #4285F4;
+            padding: 20px 0;
+            text-align: center;
+            color: #fff;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        header nav ul {
+            list-style-type: none;
+            margin: 15px 0;
+            padding: 0;
+        }
+
+        header nav ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: black;
+        }
+
+        header nav ul li a:hover {
+            background-color: #3366cc;
+        }
+
+        /* Dropdown Button */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f7f8fb; /* Background color */
+            min-width: 160px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: #fff; /* Text color */
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s; /* Transition */
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {
+            background-color: #3366cc; /* Hover background color */
+        }
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 90%;
+            margin: auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .metadata-container {
+            display: none;
+            width: 60%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            overflow: auto;
+        }
+
+        .metadata-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .metadata-info {
+            color: #333;
+            text-align: center;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .button {
+            padding: 10px 15px;
+            background-color: #4285F4;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 10px 5px;
+            width: 120px;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .custom-file-input {
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .custom-file-input input[type="file"] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+        }
+
+        .custom-file-input:after {
+            content: 'Choose File';
+            display: inline-block;
+            background: #4285F4;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .custom-file-input:hover:after {
+            background-color: #0056b3;
+        }
+
+        .file-name {
+            display: inline-block;
+            margin-right: 10px;
+            color: #333;
+            text-align: center;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            vertical-align: middle;
+        }
+        .content {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .content h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+ 
+        
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="app-name">Foto Squeeze</h1>
+        <nav>
+            <ul>
+                <li><a href="#" class="button">Home</a></li>
+                <li>
+                    <div class="dropdown">
+                        <button class="button">Services</button>
+                        <div class="dropdown-content">
+                            <a href="/img-comp" class="button">Image Compression</a>
+                            <a href="/convert-to-pdf-img " class="button">Image to PDF</a>
+                            <a href="/protect_pdf" class="button">Protect PDF</a>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="/about" class="button">About Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="content">
+            <h2>Welcome to Foto Squeeze!</h2>
+            <p>
+                Foto Squeeze is your one-stop solution for image compression, converting images to PDF, and converting Word documents to PDF.
+            </p>
+            <p>
+                With our easy-to-use interface and powerful compression algorithms, you can reduce the size of your images without compromising quality. Additionally, you can quickly convert your images and Word documents to PDF files for easy sharing and storage.
+            </p>
+        </div>
+        <div class="container">
+            <img width="500" height="150" src="{{ url_for('static', filename='img-comp.svg') }}" alt="Example Image">
+            <h3>Image Compression</h3>
+            <p>Reduce the filesize of your images</p>
+        </div>
+        <div class="container">
+            <img width="500" height="150" src="{{ url_for('static', filename='img-to-pdf.svg') }}" alt="Example Image">
+            <h3>Image to PDF</h3>
+            <p>Convert your images to PDF files for easy sharing and storage.</p>
+        </div>
+        <div class="container">
+            <img width="500" height="150" src="{{ url_for('static', filename='pdf-protect.svg') }}" alt="Example Image">
+            <h3>Protect PDF</h3>
+            <p>Protect PDF files with a password. Encrypt PDF documents to prevent unauthorized access.</p>
+        </div>
+    </div>
+</body>
+</html>

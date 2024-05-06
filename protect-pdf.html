@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Foto Squeeze - Protect PDF</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='logo.svg') }}" type="image/svg+xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1QOr/OC3ik9Flqtrjr0LNtSFTJbXE7WL3pr8BLvTtq/8h2oyK8pZGOdtd2Ky5kC7HQdL+RRtW4hzi8nMV7IPzA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* CSS styles integrated here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
+
+        header {
+            background-color: #4285F4;
+            padding: 20px 0;
+            text-align: center;
+            color: #fff;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        header nav ul {
+            list-style-type: none;
+            margin: 15px 0;
+            padding: 0;
+        }
+
+        header nav ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: black;
+        }
+
+        header nav ul li a:hover {
+            background-color: #3366cc;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 90%;
+            margin: auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="file"] {
+            margin-bottom: 20px;
+        }
+
+        input[type="password"] {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 300px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 15px;
+            background-color: #4285F4;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 150px;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
+
+        header {
+            background-color: #4285F4;
+            padding: 20px 0;
+            text-align: center;
+            color: #fff;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        header nav ul {
+            list-style-type: none;
+            margin: 15px 0;
+            padding: 0;
+        }
+
+        header nav ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: black;
+        }
+
+        header nav ul li a:hover {
+            background-color: #3366cc;
+        }
+
+        /* Dropdown Button */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f7f8fb; /* Background color */
+            min-width: 160px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: #fff; /* Text color */
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s; /* Transition */
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {
+            background-color: #3366cc; /* Hover background color */
+        }
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 90%;
+            margin: auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .button {
+            padding: 10px 15px;
+            background-color: #4285F4;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 10px 5px;
+            width: 120px;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .custom-file-input {
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .custom-file-input input[type="file"] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+        }
+
+        .custom-file-input:after {
+            content: 'Choose File';
+            display: inline-block;
+            background: #4285F4;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .custom-file-input:hover:after {
+            background-color: #0056b3;
+        }
+
+        .file-name {
+            display: inline-block;
+            margin-right: 10px;
+            color: #333;
+            text-align: center;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            vertical-align: middle;
+        }
+
+        .password-toggle {
+            position: relative;
+        }
+
+        .password-toggle .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #999;
+        }
+
+        .error-message {
+            color: #ff0000;
+            margin-top: 5px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .toggle-password {
+        border: none;
+        background: none;
+        padding: 0;
+        cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1 class="app-name">Foto Squeeze</h1>
+    <nav>
+        <ul>
+            <li><a href="/" class="button">Home</a></li>
+            <li>
+                <div class="dropdown">
+                    <button class="button">Services</button>
+                    <div class="dropdown-content">
+                        <a href="/img-comp" class="button">Image Compression</a>
+                        <a href="/convert-to-pdf-img" class="button">Image to PDF</a>
+                        <a href="/protect_pdf" class="button">Protect PDF</a>
+                    </div>
+                </div>
+            </li>
+            <li><a href="#" class="button">About Us</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="container">
+    <h2>Protect PDF</h2>
+    <form action="/protect_pdf" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <label class="custom-file-input">
+            <input type="file" name="file" accept=".pdf" onchange="updateFileName(this)">
+        </label><br>
+        <span class="file-name" id="file-name">No files chosen</span><br>
+        <label for="password">Password:</label><br> 
+        <div class="password-toggle">
+            <input type="password" id="password" name="password">
+        </div>
+        <br>
+        <label for="confirm-password">Confirm Password:</label><br> 
+        <div class="password-toggle">
+            <input type="password" id="confirm-password" name="confirm-password">
+            <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('confirm-password')"></i>
+        </div>
+        <br>
+        <span class="error-message" id="password-error"></span><br>
+        <center><input type="submit" value="Protect PDF"></center>
+    </form>
+</div>
+<script>
+    function updateFileName(input) {
+        if (input.files && input.files[0]) {
+            var fileName = input.files[0].name;
+            document.getElementById("file-name").textContent = fileName;
+        }
+    }
+
+    function togglePasswordVisibility(fieldId) {
+        var field = document.getElementById(fieldId);
+        if (field.type === "password") {
+            field.type = "text";
+        } else {
+            field.type = "password";
+        }
+    }
+
+    function validateForm() {
+        var password = document.getElementById("password").value;
+        var confirmPassword = document.getElementById("confirm-password").value;
+        var errorMessage = document.getElementById("password-error");
+
+        if (password !== confirmPassword) {
+            errorMessage.textContent = "Passwords do not match.";
+            return false;
+        } else {
+            errorMessage.textContent = "";
+            return true;
+        }
+    }
+</script>
+</body>
+</html>

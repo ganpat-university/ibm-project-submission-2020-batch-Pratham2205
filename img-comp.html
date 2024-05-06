@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="{{ url_for('static', filename='logo.svg') }}" type="image/svg+xml">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foto Squeeze - Image Compression</title>
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
+
+        header {
+            background-color: #4285F4;
+            padding: 20px 0;
+            text-align: center;
+            color: #fff;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        header nav ul {
+            list-style-type: none;
+            margin: 15px 0;
+            padding: 0;
+        }
+
+        header nav ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: black;
+        }
+
+        header nav ul li a:hover {
+            background-color: #3366cc;
+        }
+
+        /* Dropdown Button */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f7f8fb; /* Background color */
+            min-width: 160px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: #fff; /* Text color */
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s; /* Transition */
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {
+            background-color: #3366cc; /* Hover background color */
+        }
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 90%;
+            margin: auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .metadata-container {
+            display: none;
+            width: 60%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            overflow: auto;
+        }
+
+        .metadata-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .metadata-info {
+            color: #333;
+            text-align: center;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .button {
+            padding: 10px 15px;
+            background-color: #4285F4;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 10px 5px;
+            width: 120px;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .custom-file-input {
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .custom-file-input input[type="file"] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+        }
+
+        .custom-file-input:after {
+            content: 'Choose File';
+            display: inline-block;
+            background: #4285F4;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .custom-file-input:hover:after {
+            background-color: #0056b3;
+        }
+
+        .file-name {
+            display: inline-block;
+            margin-right: 10px;
+            color: #333;
+            text-align: center;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="app-name">Foto Squeeze</h1>
+        <nav>
+            <ul>
+                <li><a href="/" class="button">Home</a></li>
+                <li>
+                    <div class="dropdown">
+                        <button class="button">Services</button>
+                        <div class="dropdown-content">
+                            <a href="/img-comp" class="button">Image Compression</a>
+                            <a href="/convert-to-pdf-img" class="button">Image to PDF</a>
+                            <a href="/protect_pdf" class="button">Protect PDF</a>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="#" class="button">About Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <form action="/img-comp" method="post" enctype="multipart/form-data">
+            <label class="custom-file-input">
+                <input type="file" name="file" accept="image/*" onchange="updateFileName(this)" required>
+            </label>
+            <span class="file-name" id="file-name">No file chosen</span>
+            <button type="submit" class="button">Upload Image</button>
+            <center><p>Allowed Image Formats: PNG, JPEG, JPG</p></center>
+        </form>
+        
+        {% if error %}
+        <p style="color: #ff0000;">{{ error }}</p>
+        {% endif %}
+        <div class="image-container">
+            <div>
+                <h2>Original Image</h2>
+                {% if original_img_path %}
+                <img src="{{ original_img_path }}" alt="Original Image">
+                <p>Size: {{ '%.2f'|format(original_size) }} KB</p>
+                {% else %}
+                <p>No original image uploaded.</p>
+                {% endif %}
+            </div>
+            <div>
+                <h2>Compressed Image</h2>
+                {% if compressed_img_path %}
+                <img src="{{ compressed_img_path }}" alt="Compressed Image">
+                <p>Size: {{ '%.2f'|format(compressed_size) }} KB</p>
+                {% else %}
+                <p>No compressed image available.</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="metadata-container" id="metadata-container">
+            <h2 class="metadata-title">Metadata</h2>
+            {% if original_metadata %}
+            <div class="metadata-info">
+                <h3>Original Image Metadata:</h3>
+                {% for key, value in original_metadata.items() %}
+                <p>{{ key }}: {{ value }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% if compressed_metadata %}
+            <div class="metadata-info">
+                <h3>Compressed Image Metadata:</h3>
+                {% for key, value in compressed_metadata.items() %}
+                <p>{{ key }}: {{ value }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="button-container" id="button-container">
+            <button onclick="window.location.href='/img-comp'" class="button">Clear</button>
+            <form action="/download" method="post">
+                <input type="hidden" name="compressed_img_path" value="{{ compressed_img_path }}">
+                <button type="submit" class="button">Download Image</button>
+            </form>
+            <button class="button" id="toggleMetadataBtn">Toggle Metadata</button>
+        </div>
+    </div>
+    <script>
+        function updateFileName(input) {
+            var fileName = input.files[0].name;
+            document.getElementById("file-name").textContent = fileName;
+            document.getElementById("button-container").style.display = "flex";
+        }
+
+        document.getElementById("toggleMetadataBtn").addEventListener("click", function() {
+            var metadataContainer = document.getElementById("metadata-container");
+            if (metadataContainer.style.display === "none") {
+                metadataContainer.style.display = "block";
+            } else {
+                metadataContainer.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>
